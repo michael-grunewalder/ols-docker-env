@@ -1,5 +1,11 @@
 version: '3'
 services:
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+      - 1025:1025
+    restart: always
   mysql:
     image: mariadb:10.3.17
     command: --max_allowed_packet=256M
@@ -15,6 +21,7 @@ services:
     restart: always
   litespeed:
     image: litespeedtech/openlitespeed:${OLS_VERSION}-${PHP_VERSION}
+    build: ./custom/lsws
     env_file:
       - .env
     volumes:
